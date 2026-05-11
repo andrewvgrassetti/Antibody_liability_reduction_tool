@@ -400,7 +400,7 @@ class LiabilityReductionPipeline:
             self._result.report_paths["fasta"] = fasta_path
             logger.info("FASTA export: %s", fasta_path)
 
-        # Visualisations
+        # Visualizations
         try:
             parent_metrics = self._merge_parent_metrics()
 
@@ -420,7 +420,7 @@ class LiabilityReductionPipeline:
             )
             self._result.report_paths["liability_map"] = map_path
         except Exception as exc:  # noqa: BLE001
-            msg = f"Visualisation generation failed: {exc}"
+            msg = f"Visualization generation failed: {exc}"
             logger.warning(msg)
             self._result.errors.append(msg)
 

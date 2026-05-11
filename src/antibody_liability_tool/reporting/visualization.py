@@ -1,4 +1,4 @@
-"""Visualisation module for antibody liability analysis.
+"""Visualization module for antibody liability analysis.
 
 Creates interactive Plotly-based radar/spider plots comparing mutation
 candidates against the parent sequence, and a liability map showing

@@ -1,4 +1,4 @@
-"""Reporting sub-package for HTML reports, FASTA exports, and visualisation."""
+"""Reporting sub-package for HTML reports, FASTA exports, and visualization."""
 
 from antibody_liability_tool.reporting.fasta_export import export_fasta
 from antibody_liability_tool.reporting.html_report import generate_html_report

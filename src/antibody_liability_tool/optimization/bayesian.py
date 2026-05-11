@@ -330,14 +330,11 @@ class BayesianMutationOptimizer:
     def _evaluate_candidate(self, combo: MutationCombination) -> list[float]:
         """Evaluate a single candidate and return transformed objectives.
 
-        Objectives are transformed so all should be *minimised*:
-        - PSH → negative (lower is better, so negate to minimise)
-        - PPC → negative
-        - OASis → positive (higher is better, so keep positive for min)
-
-        Wait – for EHVI we actually want to *maximise* the hypervolume.
-        Convention: negate metrics that should be minimised so all objectives
-        are "higher is better" for the GP / EHVI framework.
+        Objectives are transformed so all are "higher is better" for the
+        GP / EHVI framework:
+        - PSH → negated (lower PSH is better, so negate)
+        - PPC → negated (lower PPC is better, so negate)
+        - OASis → kept positive (higher is better)
         """
         metrics = self.evaluator_func(combo)
         psh = metrics.get("PSH", 0.0)

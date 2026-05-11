@@ -1,0 +1,2 @@
+[console_scripts]
+antibody-liability-tool = antibody_liability_tool.cli:main
