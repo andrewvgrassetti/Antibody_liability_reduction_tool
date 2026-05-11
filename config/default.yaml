@@ -1,0 +1,113 @@
+# Antibody Liability Reduction Tool - Default Configuration
+
+# Input settings
+input:
+  numbering_scheme: "imgt"
+  chain_type: "H"  # VH heavy chain
+
+# Surface exposure settings
+surface:
+  # Method: "rule_based" (fast, default) or "structural" (requires ABodyBuilder + FreeSASA)
+  method: "rule_based"
+  # SASA threshold for exposed classification (Å²) - used in structural mode
+  sasa_threshold_exposed: 40.0
+  sasa_threshold_partial: 20.0
+
+# Liability identification
+liabilities:
+  # Amino acids considered hydrophobic at surface positions
+  hydrophobic_residues: ["F", "I", "L", "M", "V", "W", "Y"]
+  # Amino acids considered positively charged
+  positive_charge_residues: ["R", "K"]
+  # Minimum cluster size for positive charge flagging
+  positive_charge_cluster_size: 2
+  # Maximum sequential distance for charge clustering
+  charge_cluster_distance: 5
+
+# Mutation generation
+mutations:
+  # Minimum frequency in Abysis human database to consider a substitution
+  min_human_frequency: 0.05
+  # Liability motifs to avoid introducing
+  avoid_motifs:
+    n_glycosylation: "N[^P][ST]"
+    deamidation_ng: "NG"
+    deamidation_ns: "NS"
+    isomerization_dg: "DG"
+    isomerization_ds: "DS"
+    oxidation_met: true  # avoid introducing surface M
+    free_cys: true       # avoid introducing unpaired C
+
+# TAP (SAbPred) evaluator
+tap:
+  url: "https://opig.stats.ox.ac.uk/webapps/sabdab-sabpred/sabpred/tap"
+  # Rate limiting
+  rate_limit_seconds: 5.0
+  max_retries: 3
+  retry_delay_seconds: 10.0
+  timeout_seconds: 120
+  # Fallback mode: "automation" or "manual"
+  mode: "manual"
+  # Directory for manual mode batch files
+  batch_dir: "output/tap_batches"
+
+# DeepSP evaluator
+deepsp:
+  # Maximum acceptable delta for stability metrics (relative to parent)
+  max_stability_delta: 0.1
+  # Focus metrics
+  focus_metrics: ["SAP_score", "SCM_score", "developability_index"]
+
+# OASis (BioPhi) evaluator
+oasis:
+  # Minimum humanness score relative to parent
+  min_score_delta: 0.0  # must be >= parent score
+  # OASis scheme
+  scheme: "imgt"
+
+# Combinatorial expansion
+combinatorial:
+  # Maximum combination order (2 = doubles, 3 = triples)
+  max_order: 3
+  # Threshold to switch from brute-force to Bayesian optimization
+  bayesian_threshold: 50
+  # Bayesian optimization settings
+  bayesian:
+    n_initial_samples: 20
+    n_iterations: 30
+    acquisition_function: "EHVI"  # Expected Hypervolume Improvement
+    batch_size: 5
+    # Reference point for hypervolume computation
+    reference_point: [-1.0, -1.0, 0.0]
+
+# Scoring weights for final ranking
+scoring:
+  weights:
+    psh_reduction: 0.30
+    ppc_reduction: 0.25
+    oasis_delta: 0.25
+    stability_penalty: 0.20
+  # OASis threshold for combinatorial filtering
+  oasis_threshold: 0.5
+
+# Caching
+cache:
+  enabled: true
+  directory: ".cache/antibody_tool"
+  ttl_seconds: 604800  # 7 days
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Parallelism
+parallel:
+  max_workers: 4
+  async_evaluations: true
+
+# Output
+output:
+  directory: "output"
+  formats: ["html", "fasta", "csv"]
+  top_n_report: 10
