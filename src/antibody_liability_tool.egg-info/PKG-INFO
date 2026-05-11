@@ -1,0 +1,54 @@
+Metadata-Version: 2.4
+Name: antibody-liability-tool
+Version: 0.1.0
+Summary: Pipeline for identifying and reducing surface-exposed liabilities in antibody VH sequences
+Author: Andrew Grassetti
+License: MIT
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: anarci>=1.3
+Requires-Dist: biopython>=1.81
+Requires-Dist: biophi>=1.0
+Requires-Dist: click>=8.1
+Requires-Dist: numpy>=1.24
+Requires-Dist: pandas>=2.0
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: requests>=2.31
+Requires-Dist: scikit-learn>=1.3
+Requires-Dist: botorch>=0.9
+Requires-Dist: gpytorch>=1.11
+Requires-Dist: torch>=2.0
+Requires-Dist: plotly>=5.18
+Requires-Dist: jinja2>=3.1
+Requires-Dist: diskcache>=5.6
+Requires-Dist: tqdm>=4.66
+Provides-Extra: deepsp
+Requires-Dist: DeepSP>=1.0; extra == "deepsp"
+Provides-Extra: tap-automation
+Requires-Dist: playwright>=1.40; extra == "tap-automation"
+Provides-Extra: structural
+Requires-Dist: freesasa>=2.2; extra == "structural"
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4; extra == "dev"
+Requires-Dist: pytest-cov>=4.1; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.23; extra == "dev"
+Requires-Dist: ruff>=0.1; extra == "dev"
+
+# Antibody Liability Reduction Tool
+
+A Python pipeline for systematically identifying and reducing surface-exposed liabilities (hydrophobic patches, positive charge clusters) in antibody VH sequences while maintaining humanness and stability.
+
+## Overview
+
+This tool takes an antibody VH sequence with high polyreactivity and:
+
+1. Numbers residues (ANARCI/IMGT) and classifies surface exposure
+2. Identifies surface-exposed hydrophobic and positively charged residues
+3. Generates humanness-constrained mutations using Abysis frequency data
+4. Evaluates candidates through TAP (surface patches), DeepSP (stability), and OASis (humanness)
+5. Expands validated point mutations into double/triple combinations via Bayesian optimization
+6. Re-evaluates and ranks all combinatorial candidates
+
+## Status
+
+🚧 Under development
