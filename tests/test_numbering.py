@@ -7,7 +7,6 @@ from unittest.mock import patch
 import pytest
 
 from antibody_liability_tool.numbering.imgt import (
-    IMGT_REGIONS,
     classify_region,
     number_sequence,
 )

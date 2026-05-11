@@ -4,8 +4,6 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
-
 from antibody_liability_tool.optimization.scorer import ScoredCandidate
 from antibody_liability_tool.reporting.fasta_export import export_fasta
 from tests.conftest import SAMPLE_VH

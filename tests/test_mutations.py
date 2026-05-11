@@ -7,7 +7,7 @@ from unittest.mock import patch
 import pytest
 
 from antibody_liability_tool.liabilities.detector import Liability
-from antibody_liability_tool.mutations.generator import CandidateMutation, generate_mutations
+from antibody_liability_tool.mutations.generator import generate_mutations
 
 
 def _mock_freq_data() -> dict[str, dict[str, float]]:
@@ -116,4 +116,6 @@ class TestGenerateMutations:
         result = generate_mutations(liabilities, numbered)
         proposed_aas = {c.proposed_aa for c in result}
         # Q, S, T, A are neutral replacements for K
-        assert proposed_aas & {"Q", "S", "T", "A"}, f"Expected neutral replacements, got {proposed_aas}"
+        assert proposed_aas & {"Q", "S", "T", "A"}, (
+            f"Expected neutral replacements, got {proposed_aas}"
+        )

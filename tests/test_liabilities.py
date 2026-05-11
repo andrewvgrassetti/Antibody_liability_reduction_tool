@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from antibody_liability_tool.liabilities.detector import Liability, detect_liabilities
 
 
@@ -22,9 +20,9 @@ class TestDetectLiabilities:
             "57": {"exposure": "exposed", "region": "CDR2"},
         }
         liabilities = detect_liabilities(numbered, exposure)
-        hydrophobic_liabs = [l for l in liabilities if "Hydrophobic" in l.reason]
+        hydrophobic_liabs = [x for x in liabilities if "Hydrophobic" in x.reason]
         assert len(hydrophobic_liabs) >= 1
-        assert any(l.residue == "W" for l in hydrophobic_liabs)
+        assert any(x.residue == "W" for x in hydrophobic_liabs)
 
     def test_detect_positive_charge_clusters(self) -> None:
         """Adjacent positively charged residues at surface should trigger cluster detection."""
@@ -35,7 +33,7 @@ class TestDetectLiabilities:
             "63": {"exposure": "exposed", "region": "CDR2"},
         }
         liabilities = detect_liabilities(numbered, exposure)
-        charge_liabs = [l for l in liabilities if "charge cluster" in l.reason.lower()]
+        charge_liabs = [x for x in liabilities if "charge cluster" in x.reason.lower()]
         assert len(charge_liabs) >= 2
 
     def test_no_liabilities_for_ideal_sequence(self) -> None:

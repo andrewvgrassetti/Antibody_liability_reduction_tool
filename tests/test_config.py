@@ -4,10 +4,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
-import pytest
 import yaml
 
-from antibody_liability_tool.config import _DEFAULTS, _deep_merge, load_config
+from antibody_liability_tool.config import _deep_merge, load_config
 
 
 class TestLoadConfig:

@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-import pytest
-
 from antibody_liability_tool.mutations.generator import CandidateMutation
 from antibody_liability_tool.optimization.combinatorial import (
     MutationCombination,

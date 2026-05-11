@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 
-import pytest
-
-from antibody_liability_tool.optimization.scorer import CompositeScorer, ScoredCandidate
+from antibody_liability_tool.optimization.scorer import CompositeScorer
 
 
 class TestCompositeScorer:
@@ -44,13 +42,17 @@ class TestCompositeScorer:
                 "label": "bad",
                 "sequence": "AAA",
                 "parent_metrics": parent,
-                "mutant_metrics": {"PSH": 1.0, "PPC": 1.0, "oasis_humanness": 0.5, "SAP_score": 0.3},
+                "mutant_metrics": {
+                    "PSH": 1.0, "PPC": 1.0, "oasis_humanness": 0.5, "SAP_score": 0.3,
+                },
             },
             {
                 "label": "good",
                 "sequence": "BBB",
                 "parent_metrics": parent,
-                "mutant_metrics": {"PSH": 0.0, "PPC": 0.0, "oasis_humanness": 0.9, "SAP_score": 0.1},
+                "mutant_metrics": {
+                    "PSH": 0.0, "PPC": 0.0, "oasis_humanness": 0.9, "SAP_score": 0.1,
+                },
             },
         ]
         ranked = scorer.rank(candidates)
@@ -66,13 +68,17 @@ class TestCompositeScorer:
                 "label": "passes",
                 "sequence": "AAA",
                 "parent_metrics": parent,
-                "mutant_metrics": {"PSH": 0.5, "PPC": 0.5, "oasis_humanness": 0.7, "SAP_score": 0.3},
+                "mutant_metrics": {
+                    "PSH": 0.5, "PPC": 0.5, "oasis_humanness": 0.7, "SAP_score": 0.3,
+                },
             },
             {
                 "label": "fails",
                 "sequence": "BBB",
                 "parent_metrics": parent,
-                "mutant_metrics": {"PSH": 0.5, "PPC": 0.5, "oasis_humanness": 0.4, "SAP_score": 0.3},
+                "mutant_metrics": {
+                    "PSH": 0.5, "PPC": 0.5, "oasis_humanness": 0.4, "SAP_score": 0.3,
+                },
             },
         ]
         scored = scorer.rank(candidates)
@@ -83,8 +89,12 @@ class TestCompositeScorer:
 
     def test_custom_weights(self) -> None:
         """Custom weights should change relative scoring."""
-        scorer_psh = CompositeScorer(psh_reduction=1.0, ppc_reduction=0.0, oasis_delta=0.0, stability_penalty=0.0)
-        scorer_ppc = CompositeScorer(psh_reduction=0.0, ppc_reduction=1.0, oasis_delta=0.0, stability_penalty=0.0)
+        scorer_psh = CompositeScorer(
+            psh_reduction=1.0, ppc_reduction=0.0, oasis_delta=0.0, stability_penalty=0.0,
+        )
+        scorer_ppc = CompositeScorer(
+            psh_reduction=0.0, ppc_reduction=1.0, oasis_delta=0.0, stability_penalty=0.0,
+        )
         parent = {"PSH": 1.0, "PPC": 0.0, "oasis_humanness": 0.5, "SAP_score": 0.3}
         mutant = {"PSH": 0.0, "PPC": 0.0, "oasis_humanness": 0.5, "SAP_score": 0.3}
         score_psh = scorer_psh.score(parent, mutant)
