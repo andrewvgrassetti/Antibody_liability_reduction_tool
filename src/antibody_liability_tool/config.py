@@ -81,7 +81,7 @@ def _validate(cfg: dict[str, Any]) -> None:
         raise ValueError("liabilities.positive_charge_residues must be a non-empty list")
     mutations = cfg["mutations"]
     freq = mutations.get("min_human_frequency")
-    if freq is None or not (0.0 < freq <= 1.0):
+    if freq is None or freq <= 0.0 or freq > 1.0:
         raise ValueError(
             "mutations.min_human_frequency must be between 0 and 1 (exclusive/inclusive)"
         )
