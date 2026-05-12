@@ -161,6 +161,4 @@ pytest tests/ -v
 - Bayesian optimization requires PyTorch/BoTorch for full functionality
 - Structural validation (FreeSASA) is an optional extension
 
-## License
 
-MIT
