@@ -5,6 +5,7 @@ from __future__ import annotations
 import subprocess
 import sys
 import tempfile
+import time
 import traceback
 from pathlib import Path
 
@@ -326,9 +327,7 @@ if run_full or run_analyze:
 
                 if run_analyze:
                     # --- Analyze-only mode (stages 1-3) ---
-                    import time as _time
-
-                    start_time = _time.monotonic()
+                    start_time = time.monotonic()
                     pipeline._result.sequence = seq
 
                     with st.status("Running analysis (Stages 1-3)…", expanded=True) as status:
@@ -355,7 +354,7 @@ if run_full or run_analyze:
                         if not failed:
                             status.update(label="Analysis complete!", state="complete")
 
-                    pipeline._result.elapsed_seconds = _time.monotonic() - start_time
+                    pipeline._result.elapsed_seconds = time.monotonic() - start_time
 
                     result = pipeline._result
 
@@ -374,9 +373,7 @@ if run_full or run_analyze:
                     pipeline._result.sequence = seq
 
                     with st.status("Running full pipeline…", expanded=True) as status:
-                        import time as _time
-
-                        start_time = _time.monotonic()
+                        start_time = time.monotonic()
 
                         for stage_name in LiabilityReductionPipeline.STAGES:
                             st.write(f"⏳ {_STAGE_LABELS[stage_name]}")
@@ -418,7 +415,7 @@ if run_full or run_analyze:
                             )
 
                         pipeline._result.elapsed_seconds = (
-                            _time.monotonic() - start_time
+                            time.monotonic() - start_time
                         )
 
                     result = pipeline._result
