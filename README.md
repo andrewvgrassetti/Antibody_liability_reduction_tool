@@ -1,6 +1,6 @@
 # Antibody Liability Reduction Tool
 
-A Python pipeline for systematically identifying and reducing surface-exposed liabilities (hydrophobic patches, positive charge clusters) in antibody VH sequences while maintaining humanness and stability.
+A Python pipeline for systematically identifying and reducing surface-exposed liabilities (hydrophobic patches, positive charge clusters) in antibody VH sequences while maintaining humanness and structural stability.
 
 ## Pipeline Overview
 
@@ -44,6 +44,26 @@ antibody-liability-tool run --fasta examples/example_input.fasta --output-dir ou
 # With a custom config
 antibody-liability-tool run -s "EVQLVES..." -c config/default.yaml -o output/
 ```
+
+### Streamlit Web UI
+
+The tool includes an interactive web interface built with [Streamlit](https://streamlit.io/). Launch it with:
+
+```bash
+# Using the installed entry point
+antibody-liability-ui
+
+# Or directly with Streamlit
+streamlit run src/antibody_liability_tool/app.py
+```
+
+The web UI provides:
+
+- **Sequence input** — Upload a FASTA file or paste a raw VH sequence
+- **Interactive configuration** — Adjust pipeline parameters (human frequency threshold, combination order, OASis threshold, top-N) via sidebar controls
+- **Two run modes** — "Analyze Only" (stages 1–3) for quick liability detection, or "Run Pipeline" for the full 10-stage workflow
+- **Live progress** — Real-time stage-by-stage status updates
+- **Results tabs** — Summary metrics, liability table, ranked candidates (with CSV download), interactive Plotly visualizations (radar plot, liability map), full HTML report, and FASTA export
 
 ### Python API
 
@@ -92,6 +112,7 @@ All pipeline parameters are controlled via `config/default.yaml`. Key sections:
 │   ├── evaluators/             # TAP, DeepSP, OASis evaluators
 │   ├── optimization/           # Combinatorial expansion & Bayesian opt
 │   ├── reporting/              # HTML reports, FASTA export, plots
+│   ├── app.py                  # Streamlit web UI
 │   ├── cli.py                  # Click CLI
 │   ├── config.py               # Configuration loader
 │   ├── pipeline.py             # Main pipeline orchestrator
