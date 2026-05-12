@@ -30,6 +30,7 @@ dependencies = [
     "jinja2>=3.1",
     "diskcache>=5.6",
     "tqdm>=4.66",
+    "streamlit>=1.30",
 ]
 
 [project.optional-dependencies]
@@ -45,6 +46,7 @@ dev = [
 
 [project.scripts]
 antibody-liability-tool = "antibody_liability_tool.cli:main"
+antibody-liability-ui = "antibody_liability_tool.app:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
